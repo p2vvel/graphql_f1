@@ -22,7 +22,20 @@ class SprintResult(Base):
     time: Mapped[str]
     milliseconds: Mapped[int]
 
-    fastest_lap: Mapped[int]
-    fastest_lap_time: Mapped[str]
+    fastest_lap: Mapped[int] = mapped_column(name="fastestLap")
+    fastest_lap_time: Mapped[str] = mapped_column(name="fastestLapTime")
 
-    status_id: Mapped[int] = mapped_column(nullable=False)
+    status_id: Mapped[int] = mapped_column(name="statusId", nullable=False)
+
+    def __repr__(self):
+        return f'<SprintResult id={self.id}>'
+
+
+if __name__ == "__main__":
+    from sqlalchemy import select
+    from api.db import get_db
+    db = next(get_db())
+    query = select(SprintResult).limit(1000)
+    data = db.scalars(query)
+    temp = [k for k in data]
+    print(temp)

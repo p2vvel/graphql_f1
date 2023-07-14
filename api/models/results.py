@@ -18,7 +18,7 @@ class Result(Base):
 
     points: Mapped[float] = mapped_column(nullable=False)
     laps: Mapped[int] = mapped_column(nullable=False)
-    
+
     time: Mapped[str]
     milliseconds: Mapped[int]
 
@@ -28,4 +28,17 @@ class Result(Base):
     fastest_lap_time: Mapped[str] = mapped_column(name="fastestLapTime")
     fastest_lap_speed: Mapped[str] = mapped_column(name="fastestLapSpeed")
 
-    status_id = Mapped[int] = mapped_column(name="statusId", nullable=False)
+    status_id: Mapped[int] = mapped_column(name="statusId", nullable=False)
+
+    def __repr__(self):
+        return f'<Result id={self.id}>'
+
+
+if __name__ == "__main__":
+    from sqlalchemy import select
+    from api.db import get_db
+    db = next(get_db())
+    query = select(Result).limit(1000)
+    data = db.scalars(query)
+    temp = [k for k in data]
+    print(temp)

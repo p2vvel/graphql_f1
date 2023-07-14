@@ -7,4 +7,5 @@ class SettingsHandler(BaseSettings):
     class Config:
         env_file = ".env"
 
+
 settings = SettingsHandler()

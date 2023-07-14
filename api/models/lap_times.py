@@ -12,3 +12,16 @@ class LapTime(Base):
     position: Mapped[int]
     time: Mapped[str]
     milliseconds: Mapped[int]
+
+    def __repr__(self):
+        return f'<Laptime race={self.race_id} driver={self.driver_id} lap={self.lap}>'
+
+
+if __name__ == "__main__":
+    from sqlalchemy import select
+    from api.db import get_db
+    db = next(get_db())
+    query = select(LapTime).limit(1000)
+    data = db.scalars(query)
+    temp = [k for k in data]
+    print(temp)

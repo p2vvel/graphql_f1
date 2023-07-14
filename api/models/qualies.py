@@ -14,3 +14,16 @@ class Qualifying(Base):
     q1: Mapped[str]
     q2: Mapped[str]
     q3: Mapped[str]
+
+    def __repr__(self):
+        return f'<Qualifying id={self.id}>'
+
+
+if __name__ == "__main__":
+    from sqlalchemy import select
+    from api.db import get_db
+    db = next(get_db())
+    query = select(Qualifying).limit(1000)
+    data = db.scalars(query)
+    temp = [k for k in data]
+    print(temp)

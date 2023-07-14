@@ -13,3 +13,16 @@ class DriverStanding(Base):
     position: Mapped[int]
     position_text: Mapped[str] = mapped_column(name="positionText")
     wins: Mapped[int] = mapped_column(nullable=False)
+
+    def __repr__(self):
+        return f'<DriverStanding id={self.id}>'
+
+
+if __name__ == "__main__":
+    from sqlalchemy import select
+    from api.db import get_db
+    db = next(get_db())
+    query = select(DriverStanding)
+    data = db.scalars(query)
+    temp = [k for k in data]
+    print(temp)
