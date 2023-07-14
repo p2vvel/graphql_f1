@@ -1,4 +1,5 @@
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import ForeignKey
 from .base import Base
 from datetime import date as date_type, time as time_type
 
@@ -9,7 +10,7 @@ class Race(Base):
     id: Mapped[int] = mapped_column(name="raceId", primary_key=True)
     year: Mapped[int] = mapped_column(nullable=False)
     round: Mapped[int] = mapped_column(nullable=False)
-    circuit_id: Mapped[int] = mapped_column(name="circuitId", nullable=False)
+    circuit_id: Mapped[int] = mapped_column(ForeignKey("circuits.circuitId"), name="circuitId", nullable=False)    # noqa: E501
     name: Mapped[str] = mapped_column(nullable=False)
     date: Mapped[date_type] = mapped_column(nullable=False)
     time: Mapped[time_type]
@@ -28,15 +29,7 @@ class Race(Base):
     sprint_date: Mapped[date_type]
     sprint_time: Mapped[time_type]
 
+    circuit: Mapped["Circuit"] = relationship()       # noqa: F821
+
     def __repr__(self):
         return f'<Race year={self.year} round={self.round}>'
-
-
-if __name__ == "__main__":
-    from sqlalchemy import select
-    from api.db import get_db
-    db = next(get_db())
-    query = select(Race).limit(1000).offset(1000)
-    data = db.scalars(query)
-    temp = [k for k in data]
-    print(temp)
