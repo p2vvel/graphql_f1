@@ -11,3 +11,16 @@ class ConstructorResult(Base):
     
     points: Mapped[float]
     status: Mapped[str]
+
+    def __repr__(self):
+        return f'<ConstructorResult id={self.id}>'
+
+
+if __name__ == "__main__":
+    from sqlalchemy import select
+    from api.db import get_db
+    db = next(get_db())
+    query = select(ConstructorResult)
+    data = db.scalars(query)
+    temp = [k for k in data]
+    print(temp)
