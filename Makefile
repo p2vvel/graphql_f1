@@ -6,3 +6,6 @@ run_db_dev:
 
 run_server:
 	uvicorn api.app:app --reload
+
+run_strawberry:
+	strawberry server api.app:schema
