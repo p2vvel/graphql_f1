@@ -1,0 +1,2 @@
+from strawberry_sqlalchemy_mapper import StrawberrySQLAlchemyLoader
+
