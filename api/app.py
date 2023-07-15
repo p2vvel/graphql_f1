@@ -1,11 +1,18 @@
+from fastapi import FastAPI
+from graphene import ObjectType, Schema, String
+from starlette_graphene3 import GraphQLApp
 
 
-if __name__ == "__main__":
-    from api import models
-    from sqlalchemy import select
-    from api.db import get_db
-    db = next(get_db())
-    query = select(models.SprintResult).limit(1000)
-    data = db.scalars(query)
-    temp = [k for k in data]
-    print(temp)
+class Query(ObjectType):
+    hello = String(imie=String(default_value="pszemas"))
+    goodbye = String()
+
+    def resolve_hello(root, info, imie):
+        return f"Hello, {imie}!"
+
+    def resolve_goodbye(root, info):
+        return "Elo mordo"
+
+
+app = FastAPI()
+app.mount("/", GraphQLApp(schema=Schema(query=Query)))
