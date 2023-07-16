@@ -1,2 +1,7 @@
-from strawberry_sqlalchemy_mapper import StrawberrySQLAlchemyLoader
+from .base import mapper
+from .. import sql
 
+
+@mapper.type(sql.Status)
+class Status:
+    pass
