@@ -1,28 +1,18 @@
 import strawberry
-
+from strawberry.tools import merge_types
 from .models.graphql.base import get_mapper
 from .db import SessionLocal
-from sqlalchemy import select
-from .models import sql, graphql
-
+from api import queries
 
 mapper = get_mapper()
 db = SessionLocal()
 
 
-def resolve_drivers(root):
-    data = db.scalars(select(sql.Driver)).all()
-    return data
-
-
-@strawberry.type
-class Query:
-    drivers: list[graphql.Driver] = strawberry.field(resolver=resolve_drivers, )
-
-
 mapper.finalize()
 additional_types = list(mapper.mapped_types.values())
+query = merge_types("api", (queries.DriversQuery,))
+
 schema = strawberry.Schema(
-    query=Query,
+    query=query,
     types=additional_types,
 )
