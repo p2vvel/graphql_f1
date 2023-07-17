@@ -3,6 +3,9 @@ Graphs:
 DRIVERS:
 * forename
 * surname
+* number
+* code
+* wiki
 * dob (age?)
 * nationality
 * races (results)
