@@ -22,20 +22,20 @@ CONSTRUCTOS:
 * ! number of wcc?
 
 
-SEASONS:
-* year
-* ! races
-* ! drivers (with end results)
-* ! constructors (with end results)
-
-
-
 CIRCUITS:
 * name
 * country, place
 * lat, lng, alt
 * ! races
 * ! most wins/podiums/poles drivers/constructors?
+
+
+SEASONS:
+* year
+* ! races
+* ! drivers (with end results)
+* ! constructors (with end results)
+
 
 RACES:
 * name
