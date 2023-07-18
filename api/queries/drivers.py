@@ -12,7 +12,8 @@ db = SessionLocal()
 @strawberry.type
 class DriversQuery:
     @strawberry.field
-    def drivers(self, id: int | None = None, 
+    def drivers(self, 
+                id: int | None = None, 
                 forename: str | None = None, 
                 surname: str | None = None, 
                 nationality: str | None = None,

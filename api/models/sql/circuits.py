@@ -17,13 +17,3 @@ class Circuit(Base):
 
     def __repr__(self):
         return f"<Circuit: \"{self.name}\">"
-
-
-if __name__ == "__main__":
-    from sqlalchemy import select
-    from api.db import get_db
-    db = next(get_db())
-    query = select(Circuit)
-    data = db.scalars(query)
-    temp = [k for k in data]
-    print(temp)

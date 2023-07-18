@@ -12,7 +12,8 @@ db = SessionLocal()
 @strawberry.type
 class ConstructorsQuery:
     @strawberry.field
-    def constructors(self, id: int | None = None, 
+    def constructors(self, 
+                id: int | None = None, 
                 name: str | None = None, 
                 nationality: str | None = None,
                 constructor_ref: str | None = None) -> list[graphql.Constructor]:

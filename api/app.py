@@ -14,6 +14,7 @@ query = merge_types("api", (
     queries.DriversQuery,
     queries.ConstructorsQuery,
     queries.CircuitsQuery,
+    queries.SeasonsQuery
 ))
 
 schema = strawberry.Schema(

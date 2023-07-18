@@ -22,13 +22,3 @@ class Driver(Base):
 
     def __repr__(self):
         return f'<Driver: "{self.forename} {self.surname}">'
-
-
-if __name__ == "__main__":
-    from sqlalchemy import select
-    from api.db import get_db
-    db = next(get_db())
-    query = select(Driver)
-    data = db.scalars(query)
-    temp = [k for k in data]
-    print(temp)

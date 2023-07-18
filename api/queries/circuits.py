@@ -12,7 +12,8 @@ db = SessionLocal()
 @strawberry.type
 class CircuitsQuery:
     @strawberry.field
-    def circuits(self, id: int | None = None, 
+    def circuits(self, 
+                id: int | None = None, 
                 name: str | None = None, 
                 country: str | None = None,
                 location: str | None = None,
