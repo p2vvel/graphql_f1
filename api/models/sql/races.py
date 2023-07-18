@@ -13,21 +13,21 @@ class Race(Base):
     circuit_id: Mapped[int] = mapped_column(ForeignKey("circuits.circuitId"), name="circuitId", nullable=False)    # noqa: E501
     name: Mapped[str] = mapped_column(nullable=False)
     date: Mapped[date_type] = mapped_column(nullable=False)
-    time: Mapped[time_type]
+    time: Mapped[time_type | None]
     url: Mapped[str] = mapped_column(unique=True)
 
-    fp1_date: Mapped[date_type]
-    fp1_time: Mapped[time_type]
-    fp2_date: Mapped[date_type]
-    fp2_time: Mapped[time_type]
-    fp3_date: Mapped[date_type]
-    fp3_time: Mapped[time_type]
+    fp1_date: Mapped[date_type | None]
+    fp1_time: Mapped[time_type | None]
+    fp2_date: Mapped[date_type | None]
+    fp2_time: Mapped[time_type | None]
+    fp3_date: Mapped[date_type | None]
+    fp3_time: Mapped[time_type | None]
 
-    quali_date: Mapped[date_type]
-    quali_time: Mapped[time_type]
+    quali_date: Mapped[date_type | None]
+    quali_time: Mapped[time_type | None]
 
-    sprint_date: Mapped[date_type]
-    sprint_time: Mapped[time_type]
+    sprint_date: Mapped[date_type | None]
+    sprint_time: Mapped[time_type | None]
 
     circuit: Mapped["Circuit"] = relationship()       # noqa: F821
 

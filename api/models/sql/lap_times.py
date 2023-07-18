@@ -10,9 +10,9 @@ class LapTime(Base):
     driver_id: Mapped[int] = mapped_column(ForeignKey("drivers.driverId"), name="driverId", nullable=False, primary_key=True)   # noqa: E501
     lap: Mapped[int] = mapped_column(nullable=False, primary_key=True)
 
-    position: Mapped[int]
-    time: Mapped[str]
-    milliseconds: Mapped[int]
+    position: Mapped[int | None]
+    time: Mapped[str | None]
+    milliseconds: Mapped[int | None]
 
     driver: Mapped["Driver"] = relationship()               # noqa: F821
     race: Mapped["Race"] = relationship()                   # noqa: F821

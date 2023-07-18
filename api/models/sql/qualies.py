@@ -11,10 +11,10 @@ class Qualifying(Base):
     driver_id: Mapped[int] = mapped_column(ForeignKey("drivers.driverId"), name="driverId", nullable=False)   # noqa: E501
     constructor_id: Mapped[int] = mapped_column(ForeignKey("constructors.constructorId"), name="constructorId", nullable=False)     # noqa: E501
     number: Mapped[int] = mapped_column(nullable=False)
-    position: Mapped[int]
-    q1: Mapped[str]
-    q2: Mapped[str]
-    q3: Mapped[str]
+    position: Mapped[int | None]
+    q1: Mapped[str | None]
+    q2: Mapped[str | None]
+    q3: Mapped[str | None]
 
     race: Mapped["Race"] = relationship()       # noqa: F821
     driver: Mapped["Driver"] = relationship()       # noqa: F821

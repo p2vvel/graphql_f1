@@ -10,8 +10,8 @@ class ConstructorResult(Base):
     race_id: Mapped[int] = mapped_column(ForeignKey("races.raceId"), name="raceId", nullable=False, )
     constructor_id: Mapped[int] = mapped_column(ForeignKey("constructors.constructorId"), name="constructorId", nullable=False)     # noqa: E501
 
-    points: Mapped[float]
-    status: Mapped[str]
+    points: Mapped[float | None]
+    status: Mapped[str | None]
 
     constructor: Mapped["Constructor"] = relationship()     # noqa: F821
     race: Mapped["Race"] = relationship()                   # noqa: F821

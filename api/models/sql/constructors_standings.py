@@ -11,7 +11,7 @@ class ConstructorStanding(Base):
     constructor_id: Mapped[int] = mapped_column(ForeignKey("constructors.constructorId"), name="constructorId", nullable=False)     # noqa: E501
 
     points: Mapped[float] = mapped_column(nullable=False)
-    position: Mapped[int]
+    position: Mapped[int | None]
     position_text: Mapped[str] = mapped_column(name="positionText")
     wins: Mapped[int] = mapped_column(nullable=False)
 

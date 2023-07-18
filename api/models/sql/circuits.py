@@ -8,11 +8,11 @@ class Circuit(Base):
     id: Mapped[int] = mapped_column(name="circuitId", nullable=False, primary_key=True)
     circuit_ref: Mapped[str] = mapped_column(name="circuitRef", nullable=False)
     name: Mapped[str] = mapped_column(nullable=False)
-    location: Mapped[str]
-    country: Mapped[str]
-    lat: Mapped[float]
-    lng: Mapped[float]
-    alt: Mapped[int]
+    location: Mapped[str | None]
+    country: Mapped[str | None]
+    lat: Mapped[float | None]
+    lng: Mapped[float | None]
+    alt: Mapped[int | None]
     url: Mapped[str] = mapped_column(nullable=False, unique=True)
 
     def __repr__(self):

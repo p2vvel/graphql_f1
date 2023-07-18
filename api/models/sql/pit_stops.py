@@ -14,8 +14,8 @@ class PitStops(Base):
     lap: Mapped[int] = mapped_column(nullable=False)
     time: Mapped[time_type] = mapped_column(nullable=False)
 
-    duration: Mapped[str]
-    milliseconds: Mapped[int]
+    duration: Mapped[str | None]
+    milliseconds: Mapped[int | None]
 
     race: Mapped["Race"] = relationship()       # noqa: F821
     driver: Mapped["Driver"] = relationship()       # noqa: F821

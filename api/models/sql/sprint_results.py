@@ -20,8 +20,8 @@ class SprintResult(Base):
     points: Mapped[float] = mapped_column(nullable=False)
     laps: Mapped[int] = mapped_column(nullable=False)
 
-    time: Mapped[str]
-    milliseconds: Mapped[int]
+    time: Mapped[str | None]
+    milliseconds: Mapped[int | None]
 
     fastest_lap: Mapped[int] = mapped_column(name="fastestLap")
     fastest_lap_time: Mapped[str] = mapped_column(name="fastestLapTime")

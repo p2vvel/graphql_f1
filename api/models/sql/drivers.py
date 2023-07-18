@@ -7,16 +7,16 @@ class Driver(Base):
     __tablename__ = "drivers"
 
     id: Mapped[int] = mapped_column(name="driverId", nullable=False, primary_key=True)
-    driver_ref: Mapped[int] = mapped_column(name="driverRef", nullable=False)
+    driver_ref: Mapped[str] = mapped_column(name="driverRef", nullable=False)
 
-    number: Mapped[int]
-    code: Mapped[str]
+    number: Mapped[int | None]
+    code: Mapped[str | None]
 
     forename: Mapped[str] = mapped_column(nullable=False)
     surname: Mapped[str] = mapped_column(nullable=False)
 
-    dob: Mapped[date]
-    nationality: Mapped[str]
+    dob: Mapped[date | None]
+    nationality: Mapped[str | None]
 
     url: Mapped[str] = mapped_column(nullable=False, unique=True)
 

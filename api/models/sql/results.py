@@ -13,18 +13,18 @@ class Result(Base):
 
     number: Mapped[int] = mapped_column(nullable=False)
     grid: Mapped[int] = mapped_column(nullable=False)
-    position: Mapped[int]
+    position: Mapped[int | None]
     position_text: Mapped[str] = mapped_column(name="positionText", nullable=False)
     position_order: Mapped[int] = mapped_column(name="positionOrder", nullable=False)
 
     points: Mapped[float] = mapped_column(nullable=False)
     laps: Mapped[int] = mapped_column(nullable=False)
 
-    time: Mapped[str]
+    time: Mapped[str | None]
     milliseconds: Mapped[int]
 
     fastestLap: Mapped[int] = mapped_column(name="fastestLap")
-    rank: Mapped[int]
+    rank: Mapped[int | None]
 
     fastest_lap_time: Mapped[str] = mapped_column(name="fastestLapTime")
     fastest_lap_speed: Mapped[str] = mapped_column(name="fastestLapSpeed")

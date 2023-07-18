@@ -6,3 +6,6 @@ pymysql==1.1
 cryptography==41
 strawberry-graphql==0.195
 strawberry-sqlalchemy-mapper==0.1
+rich==13.4
+typer==0.9
+libcst==1.0
