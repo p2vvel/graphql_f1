@@ -10,9 +10,10 @@ db = SessionLocal()
 
 mapper.finalize()
 additional_types = list(mapper.mapped_types.values())
-query = merge_types("api", (queries.DriversQuery,))
+query = merge_types("api", (queries.DriversQuery, queries.ConstructorsQuery))
 
 schema = strawberry.Schema(
     query=query,
     types=additional_types,
 )
+

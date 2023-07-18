@@ -11,7 +11,6 @@ db = SessionLocal()
 
 @strawberry.type
 class DriversQuery:
-    # drivers: list[graphql.Driver] = strawberry.field(resolver=resolve_drivers)
     @strawberry.field
     def drivers(self, id: int | None = None, 
                 forename: str | None = None, 
