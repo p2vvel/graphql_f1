@@ -31,5 +31,8 @@ class Race(Base):
 
     circuit: Mapped["Circuit"] = relationship()       # noqa: F821
 
+    results: Mapped[list["Result"]] = relationship(order_by="Result.position_order.asc()")
+    qualies: Mapped[list["Qualifying"]] = relationship(order_by="Qualifying.position.asc()")
+
     def __repr__(self):
         return f'<Race year={self.year} round={self.round}>'

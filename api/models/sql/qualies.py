@@ -21,4 +21,4 @@ class Qualifying(Base):
     constructor: Mapped["Constructor"] = relationship()       # noqa: F821
 
     def __repr__(self):
-        return f'<Qualifying id={self.id}>'
+        return f'<Qualifying id={self.id} position={self.position}>'

@@ -22,3 +22,13 @@ schema = strawberry.Schema(
     query=query,
     types=additional_types,
 )
+
+
+if __name__ == "__main__":
+    from sqlalchemy import select
+    from .models import sql
+    db = SessionLocal()
+    stmt = select(sql.Race)
+    data = db.scalars(stmt).first()
+
+    print(data)

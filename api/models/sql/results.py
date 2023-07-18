@@ -36,4 +36,4 @@ class Result(Base):
     constructor: Mapped["Constructor"] = relationship()       # noqa: F821
 
     def __repr__(self):
-        return f'<Result id={self.id}>'
+        return f'<Result id={self.id} result="{self.position_text}">'
