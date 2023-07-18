@@ -15,8 +15,9 @@ class DriversQuery:
     def drivers(self, id: int | None = None, 
                 forename: str | None = None, 
                 surname: str | None = None, 
-                nationality: str | None = None,) -> list[graphql.Driver]:
-        filters = create_filters(sql.Driver, ("id", "forename", "surname", "nationality"), locals())
+                nationality: str | None = None,
+                driver_ref: str | None = None,) -> list[graphql.Driver]:
+        filters = create_filters(sql.Driver, ("id", "forename", "surname", "nationality", "driver_ref"), locals())
 
         stmt = select(sql.Driver).where(*filters)
         data = db.scalars(stmt).all()

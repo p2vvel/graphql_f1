@@ -14,8 +14,9 @@ class ConstructorsQuery:
     @strawberry.field
     def constructors(self, id: int | None = None, 
                 name: str | None = None, 
-                nationality: str | None = None,) -> list[graphql.Constructor]:
-        filters = create_filters(sql.Constructor, ("id", "forename", "surname", "nationality"), locals())
+                nationality: str | None = None,
+                constructor_ref: str | None = None) -> list[graphql.Constructor]:
+        filters = create_filters(sql.Constructor, ("id", "name", "nationality", "constructor_ref"), locals())
 
         stmt = select(sql.Constructor).where(*filters)
         data = db.scalars(stmt).all()
