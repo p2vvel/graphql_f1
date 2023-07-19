@@ -2,13 +2,14 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 from .base import Base
 from datetime import date as date_type, time as time_type
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Race(Base):
     __tablename__ = "races"
 
     id: Mapped[int] = mapped_column(name="raceId", primary_key=True)
-    year: Mapped[int] = mapped_column(nullable=False)
+    year: Mapped[int] = mapped_column(ForeignKey("seasons.year"), nullable=False)
     round: Mapped[int] = mapped_column(nullable=False)
     circuit_id: Mapped[int] = mapped_column(ForeignKey("circuits.circuitId"), name="circuitId", nullable=False)    # noqa: E501
     name: Mapped[str] = mapped_column(nullable=False)
@@ -30,9 +31,14 @@ class Race(Base):
     sprint_time: Mapped[time_type | None]
 
     circuit: Mapped["Circuit"] = relationship()       # noqa: F821
+    season: Mapped["Season"] = relationship()
 
     results: Mapped[list["Result"]] = relationship(order_by="Result.position_order.asc()")
     qualies: Mapped[list["Qualifying"]] = relationship(order_by="Qualifying.position.asc()")
+
+    @hybrid_property
+    def last_race(self) -> bool:
+        return self.round == self.season.last_round
 
     def __repr__(self):
         return f'<Race year={self.year} round={self.round}>'

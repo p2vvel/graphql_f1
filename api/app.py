@@ -28,7 +28,7 @@ if __name__ == "__main__":
     from sqlalchemy import select
     from .models import sql
     db = SessionLocal()
-    stmt = select(sql.Race)
-    data = db.scalars(stmt).first()
+    stmt = select(sql.Race).where(sql.Race.year.in_([2018, 2019, 2020, 2021, 2022, 2023])).order_by(sql.Race.year.asc())
+    data = db.scalars(stmt).all()
 
     print(data)
