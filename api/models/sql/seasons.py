@@ -5,7 +5,7 @@ from .base import Base
 from .races import Race
 from sqlalchemy import SQLColumnExpression
 from sqlalchemy.sql import functions as sql_fun
-from . import Race
+from . import Race, Result
 
 
 class Season(Base):
@@ -25,10 +25,25 @@ class Season(Base):
     @last_round.inplace.expression
     @classmethod
     def _last_round_expression(cls) -> SQLColumnExpression[int]:
-        stmt = (select(sql_fun.max(Race.round)).where(Race.year == cls.year).label("last_round"))
+        stmt = (select(sql_fun.max(Race.round))
+                .where(Race.year == cls.year)
+                .label("last_round"))
         return stmt
 
     driver_standings: Mapped[list["DriverStanding"]] = relationship(secondary="races")
+
+    @hybrid_property
+    def latest_round(self) -> int:
+        return max([k.round for k in self.races if k.results != []])
+
+    @latest_round.inplace.expression
+    @classmethod
+    def _latest_round_expression(cls) -> SQLColumnExpression[int]:
+        stmt = (select(sql_fun.max(Race.round))
+                .join(Result, Result.race_id == Race.id)
+                .where(Race.year == cls.year)
+                .label("latest_round"))
+        return stmt
 
     def __repr__(self):
         return f'<Season year={self.year}>'

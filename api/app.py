@@ -31,7 +31,9 @@ if __name__ == "__main__":
     import logging
     logging.basicConfig()
     logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
-    stmt = select(sql.Season.year, sql.Season.last_round)
-    data = db.execute(stmt).all()
+    # stmt = select(sql.Season.year, sql.Season.last_round)
+    # stmt = select(sql.Race.round).join(sql.Result, sql.Result.race_id == sql.Race.id).where(sql.Race.year == 2023).distinct()
+    stmt = select(sql.Season)
+    data = db.scalars(stmt).all()
 
     print(data)
