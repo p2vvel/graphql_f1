@@ -30,15 +30,18 @@ class Race(Base):
     sprint_date: Mapped[date_type | None]
     sprint_time: Mapped[time_type | None]
 
-    circuit: Mapped["Circuit"] = relationship()       # noqa: F821
-    season: Mapped["Season"] = relationship()
+    circuit: Mapped["Circuit"] = relationship()         # noqa: F821
+    season: Mapped["Season"] = relationship()           # noqa: F821
 
-    results: Mapped[list["Result"]] = relationship(order_by="Result.position_order.asc()")
-    qualies: Mapped[list["Qualifying"]] = relationship(order_by="Qualifying.position.asc()")
+    results: Mapped[list["Result"]] = relationship(order_by="Result.position_order.asc()")      # noqa: F821, E501
+    qualies: Mapped[list["Qualifying"]] = relationship(order_by="Qualifying.position.asc()")    # noqa: F821, E501
 
     @hybrid_property
     def last_race(self) -> bool:
         return self.round == self.season.last_round
+
+    driver_standings: Mapped[list["DriverStanding"]] = relationship(order_by="DriverStanding.position.asc()")      # noqa: F821, E501
+    constructor_standings: Mapped[list["ConstructorStanding"]] = relationship(order_by="ConstructorStanding.position.asc()")    # noqa: F821, E501
 
     def __repr__(self):
         return f'<Race year={self.year} round={self.round}>'

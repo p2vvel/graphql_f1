@@ -2,10 +2,9 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import select
 from sqlalchemy.ext.hybrid import hybrid_property
 from .base import Base
-from .races import Race
 from sqlalchemy import SQLColumnExpression
 from sqlalchemy.sql import functions as sql_fun
-from . import Race, Result
+from . import Race, Result, DriverStanding
 
 
 class Season(Base):
@@ -30,7 +29,7 @@ class Season(Base):
                 .label("last_round"))
         return stmt
 
-    driver_standings: Mapped[list["DriverStanding"]] = relationship(secondary="races")
+    driver_standings: Mapped[list["DriverStanding"]] = relationship(secondary="races")      # noqa: F821
 
     @hybrid_property
     def latest_round(self) -> int:
@@ -44,6 +43,20 @@ class Season(Base):
                 .where(Race.year == cls.year)
                 .label("latest_round"))
         return stmt
+
+    latest_driver_standings: Mapped[list["DriverStanding"]] = relationship(     # noqa: F821
+        primaryjoin="and_(Season.year==Race.year, Race.round==Season.latest_round)",
+        secondary="races",
+        order_by="DriverStanding.position.asc()",
+        viewonly=True
+        )
+
+    latest_constructor_standings: Mapped[list["ConstructorStanding"]] = relationship(   # noqa: F821
+        primaryjoin="and_(Season.year==Race.year, Race.round==Season.latest_round)",
+        secondary="races",
+        order_by="ConstructorStanding.position.asc()",
+        viewonly=True
+        )
 
     def __repr__(self):
         return f'<Season year={self.year}>'

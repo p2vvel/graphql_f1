@@ -19,4 +19,4 @@ class ConstructorStanding(Base):
     race: Mapped["Race"] = relationship()                   # noqa: F821
 
     def __repr__(self):
-        return f'<ConstructorStanding id={self.id}>'
+        return f'<ConstructorStanding id={self.id} position={self.position} constructor="{self.constructor.constructor_ref}">'  # noqa: E501

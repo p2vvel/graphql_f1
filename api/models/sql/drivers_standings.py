@@ -19,4 +19,4 @@ class DriverStanding(Base):
     driver: Mapped["Driver"] = relationship()               # noqa: F821
 
     def __repr__(self):
-        return f'<DriverStanding id={self.id}>'
+        return f'<DriverStanding id={self.id} position={self.position} driver="{self.driver.driver_ref}">'  # noqa: E501
