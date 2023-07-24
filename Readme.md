@@ -1,45 +1,26 @@
-Graphs:
+# GraphQL F1 history data API
 
-DRIVERS:
-* forename
-* surname
-* number
-* code
-* wiki
-* dob (age?)
-* nationality
-* ! races (results)
-* ! seasons
-* ! constructors
-* ! number of wdc? number of poles? number of podiums? number of wins?
+### Be careful, still under construction 🚧👷‍♂️🏗️👷‍♂️👷‍♂️🚧
 
 
-CONSTRUCTOS:
-* name
-* nationality
-* ! races (results for both drivers)
-* ! seasons (end results for wcc, wcc for drivers)
-* ! number of wcc?
+
+GraphQL API providing historical F1 data, built with FastAPI, SQLAlchemy, and Strawberry library.
+
+### Tech stack:
+* FastAPI
+* SQLAlchemy
+* MySQL
+* Docker
 
 
-CIRCUITS:
-* name
-* country, place
-* lat, lng, alt
-* ! races
-* ! most wins/podiums/poles drivers/constructors?
+### Available graphs:
+* drivers
+* constructors
+* seasons
+* races
+* circuits
 
 
-SEASONS:
-* year
-* ! races
-* ! drivers (with end results)
-* ! constructors (with end results)
 
-
-RACES:
-* name
-* date
-* circuit
-* ! quali results
-* ! race results
+### Data source
+Data collected by <b>Ergast</b> -> [Ergast DB](http://ergast.com/mrd/db/).
