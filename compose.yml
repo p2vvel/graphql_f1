@@ -1,0 +1,10 @@
+services:
+  db:
+    build: ./db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "f1db"
+      MYSQL_USER: "f1user"
+      MYSQL_PASSWORD: "f1password"
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
