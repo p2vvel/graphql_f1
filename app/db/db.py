@@ -9,7 +9,7 @@ async def init():
     #  which contain models from "app.models"
     await Tortoise.init(
         db_url=f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_db}",
-        modules={"models": ["app.db.models.drivers"]},
+        modules={"models": ["app.db.models"]},
     )
 
     # Generate the schema
