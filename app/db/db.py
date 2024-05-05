@@ -1,4 +1,5 @@
 from tortoise import Tortoise, run_async
+
 from app.config import config
 
 
@@ -7,8 +8,8 @@ async def init():
     #  also specify the app name of "models"
     #  which contain models from "app.models"
     await Tortoise.init(
-        db_url=f'mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_db}',
-        modules={'models': ['app.db.models.drivers']}
+        db_url=f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_db}",
+        modules={"models": ["app.db.models.drivers"]},
     )
 
     # Generate the schema
