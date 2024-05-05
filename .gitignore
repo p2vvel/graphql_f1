@@ -5,3 +5,4 @@ __pycache__/
 *.sql
 .idea/
 .vscode/
+.mypy_cache/

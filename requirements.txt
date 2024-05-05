@@ -65,9 +65,12 @@ orjson==3.10.3
 pydantic==2.7.1
     # via
     #   fastapi
+    #   pydantic-settings
     #   tortoise-orm
 pydantic-core==2.18.2
     # via pydantic
+pydantic-settings==2.2.1
+    # via -r requirements.in
 pygments==2.18.0
     # via rich
 pypika-tortoise==0.1.6
@@ -75,7 +78,9 @@ pypika-tortoise==0.1.6
 python-dateutil==2.9.0.post0
     # via strawberry-graphql
 python-dotenv==1.0.1
-    # via uvicorn
+    # via
+    #   pydantic-settings
+    #   uvicorn
 python-multipart==0.0.9
     # via fastapi
 pytz==2024.1
