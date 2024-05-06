@@ -1,20 +1,23 @@
-from tortoise import Tortoise, run_async
+from tortoise import Tortoise
 
 from app.config import config
 
 
-async def init():
-    # Here we create a SQLite DB using file "db.sqlite3"
-    #  also specify the app name of "models"
-    #  which contain models from "app.models"
+async def initialize_db() -> None:
+    connection_string = "mysql://{user}:{password}@{host}:{port}/{db}".format(
+        user=config.mysql_user,
+        password=config.mysql_password,
+        host=config.mysql_host,
+        port=config.mysql_port,
+        db=config.mysql_db,
+    )
     await Tortoise.init(
-        db_url=f"mysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_db}",
+        db_url=connection_string,
         modules={"models": ["app.db.models"]},
     )
 
-    # Generate the schema
     await Tortoise.generate_schemas()
 
 
-# run_async is a helper function to run simple async Tortoise scripts.
-run_async(init())
+async def close_db() -> None:
+    await Tortoise.close_connections()

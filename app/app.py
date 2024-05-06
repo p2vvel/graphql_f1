@@ -1,18 +1,34 @@
-# type: ignore  # boilerplate
+from contextlib import asynccontextmanager
+
 import strawberry
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+from strawberry.fastapi import GraphQLRouter
+
+from app.db.db import close_db, initialize_db
+from app.strawberry import models
 
 
-@strawberry.type
-class User:
-    name: str
-    age: int
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await initialize_db()
+    yield
+    await close_db()
 
 
-@strawberry.type
-class Query:
-    @strawberry.field
-    def user(self) -> User:
-        return User(name="Patrick", age=100)
+schema = strawberry.Schema(query=models.Query)
+graphql_app = GraphQLRouter(schema)
+
+app = FastAPI(lifespan=lifespan)
+app.include_router(graphql_app, prefix="/graphql")
 
 
-schema = strawberry.Schema(query=Query)
+@app.get("/")
+def root_to_graphql_redirect():
+    return RedirectResponse("/graphql")
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app=app)
