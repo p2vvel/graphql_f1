@@ -20,6 +20,9 @@ class Circuits(models.Model):
     def __str__(self) -> str:
         return f'<Circuit: "{self.name}">'
 
+    def __repr__(self) -> str:
+        return str(self)
+
 
 class ConstructorResults(models.Model):
     constructorResultsId = fields.IntField(pk=True, source_field="constructorResultsId")
@@ -64,6 +67,9 @@ class Constructors(models.Model):
     def __str__(self) -> str:
         return f'<Constructor: "{self.name}">'
 
+    def __repr__(self) -> str:
+        return str(self)
+
 
 class DriverStandings(models.Model):
     driverStandingsId = fields.IntField(pk=True, source_field="driverStandingsId")
@@ -96,6 +102,9 @@ class Drivers(models.Model):
 
     def __str__(self) -> str:
         return f'<Driver: "{self.forename} {self.surname}">'
+
+    def __repr__(self) -> str:
+        return str(self)
 
 
 class LapTimes(models.Model):
@@ -170,6 +179,9 @@ class Races(models.Model):
     def __str__(self) -> str:
         return f'<Race: "{self.name} - {self.year}">'
 
+    def __repr__(self) -> str:
+        return str(self)
+
 
 class Results(models.Model):
     resultId = fields.IntField(pk=True, source_field="resultId")
@@ -211,6 +223,9 @@ class Seasons(models.Model):
     def __str__(self) -> str:
         return f'<Season: "{self.year}">'
 
+    def __repr__(self) -> str:
+        return str(self)
+
 
 class SprintResults(models.Model):
     sprintResultId = fields.IntField(pk=True, source_field="sprintResultId")
@@ -247,3 +262,6 @@ class Status(models.Model):
 
     def __str__(self) -> str:
         return f'<Status: "{self.status}">'
+
+    def __repr__(self) -> str:
+        return str(self)
