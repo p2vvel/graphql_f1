@@ -89,7 +89,7 @@ class Drivers(models.Model):
     code = fields.CharField(max_length=3, null=True)
     forename = fields.CharField(max_length=255, default="")
     surname = fields.CharField(max_length=255, default="")
-    dob = fields.DateField(null=True)
+    date_of_birth = fields.DateField(null=True, source_field="dob")
     nationality = fields.CharField(max_length=255, null=True)
     url = fields.CharField(max_length=255, default="")
 

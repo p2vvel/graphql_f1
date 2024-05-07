@@ -6,14 +6,20 @@ import strawberry
 @strawberry.type
 class Drivers:
     id: int
-    ref: str
+    ref: strawberry.Private[str]  # hidden field
     number: int | None
     code: str | None
     forename: str
     surname: str
-    dob: datetime.date | None
+    date_of_birth: datetime.date | None
     nationality: str | None
     url: str
+
+    # age: int = strawberry.field(resolver=age_resolver)
+    @strawberry.field
+    def age(self) -> int:
+        timedelta = datetime.date.today() - self.date_of_birth
+        return timedelta // datetime.timedelta(days=365.2425)
 
 
 async def get_drivers():
