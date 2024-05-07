@@ -4,8 +4,8 @@ from tortoise import fields, models
 
 
 class Circuits(models.Model):
-    circuitId = fields.IntField(pk=True, source_field="circuitId")
-    circuitRef = fields.CharField(max_length=255, default="", source_field="circuitRef")
+    id = fields.IntField(pk=True, source_field="circuitId")
+    ref = fields.CharField(max_length=255, default="", source_field="circuitRef")
     name = fields.CharField(max_length=255, default="")
     location = fields.CharField(max_length=255, null=True)
     country = fields.CharField(max_length=255, null=True)
@@ -25,9 +25,9 @@ class Circuits(models.Model):
 
 
 class ConstructorResults(models.Model):
-    constructorResultsId = fields.IntField(pk=True, source_field="constructorResultsId")
-    raceId = fields.IntField(default=0, source_field="raceId")
-    constructorId = fields.IntField(default=0, source_field="constructorId")
+    id = fields.IntField(pk=True, source_field="constructorResultsId")
+    race_id = fields.IntField(default=0, source_field="raceId")
+    constructor_id = fields.IntField(default=0, source_field="constructorId")
     points = fields.FloatField(null=True)
     status = fields.CharField(max_length=255, null=True)
 
@@ -36,11 +36,9 @@ class ConstructorResults(models.Model):
 
 
 class ConstructorStandings(models.Model):
-    constructorStandingsId = fields.IntField(
-        pk=True, source_field="constructorStandingsId"
-    )
-    raceId = fields.IntField(default=0, source_field="raceId")
-    constructorId = fields.IntField(default=0, source_field="constructorId")
+    id = fields.IntField(pk=True, source_field="constructorStandingsId")
+    race_id = fields.IntField(default=0, source_field="raceId")
+    constructor_id = fields.IntField(default=0, source_field="constructorId")
     points = fields.FloatField(default=0)
     position = fields.IntField(null=True)
     positionText = fields.CharField(
@@ -53,10 +51,8 @@ class ConstructorStandings(models.Model):
 
 
 class Constructors(models.Model):
-    constructorId = fields.IntField(pk=True, source_field="constructorId")
-    constructorRef = fields.CharField(
-        max_length=255, default="", source_field="constructorRef"
-    )
+    id = fields.IntField(pk=True, source_field="constructorId")
+    ref = fields.CharField(max_length=255, default="", source_field="constructorRef")
     name = fields.CharField(max_length=255, default="")
     nationality = fields.CharField(max_length=255, null=True)
     url = fields.CharField(max_length=255, default="")
@@ -72,12 +68,12 @@ class Constructors(models.Model):
 
 
 class DriverStandings(models.Model):
-    driverStandingsId = fields.IntField(pk=True, source_field="driverStandingsId")
-    raceId = fields.IntField(default=0, source_field="raceId")
-    driverId = fields.IntField(default=0, source_field="driverId")
+    id = fields.IntField(pk=True, source_field="driverStandingsId")
+    race_id = fields.IntField(default=0, source_field="raceId")
+    driver_id = fields.IntField(default=0, source_field="driverId")
     points = fields.FloatField(default=0)
     position = fields.IntField(null=True)
-    positionText = fields.CharField(
+    position_text = fields.CharField(
         max_length=255, null=True, source_field="positionText"
     )
     wins = fields.IntField(default=0)
@@ -87,8 +83,8 @@ class DriverStandings(models.Model):
 
 
 class Drivers(models.Model):
-    driverId = fields.IntField(pk=True, source_field="driverId")
-    driverRef = fields.CharField(max_length=255, default="", source_field="driverRef")
+    id = fields.IntField(pk=True, source_field="driverId")
+    ref = fields.CharField(max_length=255, default="", source_field="driverRef")
     number = fields.IntField(null=True)
     code = fields.CharField(max_length=3, null=True)
     forename = fields.CharField(max_length=255, default="")
@@ -108,8 +104,8 @@ class Drivers(models.Model):
 
 
 class LapTimes(models.Model):
-    raceId = fields.IntField(source_field="raceId")
-    driverId = fields.IntField(source_field="driverId")
+    race_id = fields.IntField(source_field="raceId")
+    driver_id = fields.IntField(source_field="driverId")
     lap = fields.IntField()
     position = fields.IntField(null=True)
     time = fields.CharField(max_length=255, null=True)
@@ -123,8 +119,8 @@ class LapTimes(models.Model):
 
 
 class PitStops(models.Model):
-    raceId = fields.IntField(source_field="raceId")
-    driverId = fields.IntField(source_field="driverId")
+    race_id = fields.IntField(source_field="raceId")
+    driver_id = fields.IntField(source_field="driverId")
     stop = fields.IntField()
     lap = fields.IntField()
     time = fields.DateField()
@@ -139,10 +135,10 @@ class PitStops(models.Model):
 
 
 class Qualifying(models.Model):
-    qualifyId = fields.IntField(pk=True, source_field="qualifyId")
-    raceId = fields.IntField(default=0, source_field="raceId")
-    driverId = fields.IntField(default=0, source_field="driverId")
-    constructorId = fields.IntField(default=0, source_field="constructorId")
+    id = fields.IntField(pk=True, source_field="qualifyId")
+    race_id = fields.IntField(default=0, source_field="raceId")
+    driver_id = fields.IntField(default=0, source_field="driverId")
+    constructor_id = fields.IntField(default=0, source_field="constructorId")
     number = fields.IntField(default=0)
     position = fields.IntField(null=True)
     q1 = fields.CharField(max_length=255, null=True)
@@ -154,10 +150,10 @@ class Qualifying(models.Model):
 
 
 class Races(models.Model):
-    raceId = fields.IntField(pk=True, source_field="raceId")
+    id = fields.IntField(pk=True, source_field="raceId")
     year = fields.IntField(default=0)
     round = fields.IntField(default=0)
-    circuitId = fields.IntField(default=0, source_field="circuitId")
+    circuit_id = fields.IntField(default=0, source_field="circuitId")
     name = fields.CharField(max_length=255, default="")
     date = fields.DateField(default=date.today())
     time = fields.TimeField(null=True)
@@ -184,30 +180,30 @@ class Races(models.Model):
 
 
 class Results(models.Model):
-    resultId = fields.IntField(pk=True, source_field="resultId")
-    raceId = fields.IntField(default=0, source_field="raceId")
-    driverId = fields.IntField(default=0, source_field="driverId")
-    constructorId = fields.IntField(default=0, source_field="constructorId")
+    id = fields.IntField(pk=True, source_field="resultId")
+    race_id = fields.IntField(default=0, source_field="raceId")
+    driver_id = fields.IntField(default=0, source_field="driverId")
+    constructor_id = fields.IntField(default=0, source_field="constructorId")
     number = fields.IntField(null=True)
     grid = fields.IntField(default=0)
     position = fields.IntField(null=True)
-    positionText = fields.CharField(
+    position_text = fields.CharField(
         max_length=255, default="", source_field="positionText"
     )
-    positionOrder = fields.IntField(default=0, source_field="positionOrder")
+    position_order = fields.IntField(default=0, source_field="positionOrder")
     points = fields.FloatField(default=0)
     laps = fields.IntField(default=0)
     time = fields.CharField(max_length=255, null=True)
     milliseconds = fields.IntField(null=True)
-    fastestLap = fields.IntField(null=True, source_field="fastestLap")
+    fastest_lap = fields.IntField(null=True, source_field="fastestLap")
     rank = fields.IntField(default=0)
-    fastestLapTime = fields.CharField(
+    fastest_lap_time = fields.CharField(
         max_length=255, null=True, source_field="fastestLapTime"
     )
-    fastestLapSpeed = fields.CharField(
+    fastest_lap_speed = fields.CharField(
         max_length=255, null=True, source_field="fastestLapSpeed"
     )
-    statusId = fields.IntField(default=0, source_field="statusId")
+    status_id = fields.IntField(default=0, source_field="statusId")
 
     class Meta:
         table = "results"
@@ -228,33 +224,33 @@ class Seasons(models.Model):
 
 
 class SprintResults(models.Model):
-    sprintResultId = fields.IntField(pk=True, source_field="sprintResultId")
-    raceId = fields.IntField(default=0, source_field="raceId")
-    driverId = fields.IntField(default=0, source_field="driverId")
-    constructorId = fields.IntField(default=0, source_field="constructorId")
+    id = fields.IntField(pk=True, source_field="sprintResultId")
+    race_id = fields.IntField(default=0, source_field="raceId")
+    driver_id = fields.IntField(default=0, source_field="driverId")
+    constructor_id = fields.IntField(default=0, source_field="constructorId")
     number = fields.IntField(default=0)
     grid = fields.IntField(default=0)
     position = fields.IntField(null=True)
-    positionText = fields.CharField(
+    position_text = fields.CharField(
         max_length=255, default="", source_field="positionText"
     )
-    positionOrder = fields.IntField(default=0, source_field="positionOrder")
+    position_order = fields.IntField(default=0, source_field="positionOrder")
     points = fields.FloatField(default=0)
     laps = fields.IntField(default=0)
     time = fields.CharField(max_length=255, null=True)
     milliseconds = fields.IntField(null=True)
-    fastestLap = fields.IntField(null=True, source_field="fastestLap")
-    fastestLapTime = fields.CharField(
+    fastest_lap = fields.IntField(null=True, source_field="fastestLap")
+    fastest_lap_time = fields.CharField(
         max_length=255, null=True, source_field="fastestLapTime"
     )
-    statusId = fields.IntField(default=0, source_field="statusId")
+    status_id = fields.IntField(default=0, source_field="statusId")
 
     class Meta:
         table = "sprintResults"
 
 
 class Status(models.Model):
-    statusId = fields.IntField(pk=True, source_field="statusId")
+    id = fields.IntField(pk=True, source_field="statusId")
     status = fields.CharField(max_length=255, default="")
 
     class Meta:
