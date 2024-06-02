@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graphql-f1
+spec:
+  selector:
+    matchLabels:
+      app: graphql-f1
+  template:
+    metadata:
+      labels:
+        app: graphql-f1
+    spec:
+      volumes:
+        - name: dump-volume
+          emptyDir: {}
+      containers:
+      - name: db
+        image: postgres:15
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: POSTGRES_USER
+            value: f1user
+          - name: POSTGRES_PASSWORD
+            value: f1password
+          - name: POSTGRES_DB
+            value: f1db
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+          - mountPath: /docker-entrypoint-initdb.d
+            name: dump-volume
+      initContainers:
+        - name: db-init
+          image: alpine
+          env:
+            - name: F1DB_DUMP
+              value: v2024.8.0
+          command:
+            - "/bin/sh"
+            - "-c"
+          args:
+            - "apk add --no-interactive wget unzip && wget https://github.com/f1db/f1db/releases/download/$F1DB_DUMP/f1db-sql-postgresql.zip && unzip f1db-sql-postgresql.zip && cp f1db-sql-postgresql.sql /docker-entrypoint-initdb.d/f1db-sql-postgresql.sql"
+          volumeMounts:
+          - mountPath: /docker-entrypoint-initdb.d
+            name: dump-volume
