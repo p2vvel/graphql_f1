@@ -1,0 +1,706 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hasura-config
+data:
+  key: value
+  config.json: |
+    {
+      "resource_version": 98,
+      "metadata": {
+        "version": 3,
+        "sources": [
+          {
+            "name": "default",
+            "kind": "postgres",
+            "tables": [],
+            "configuration": {
+              "connection_info": {
+                "database_url": {
+                  "from_env": "HASURA_GRAPHQL_DATABASE_URL"
+                },
+                "isolation_level": "read-committed",
+                "pool_settings": {
+                  "connection_lifetime": 600,
+                  "idle_timeout": 180,
+                  "max_connections": 50,
+                  "retries": 1
+                },
+                "use_prepared_statements": true
+              }
+            }
+          },
+          {
+            "name": "f1db",
+            "kind": "postgres",
+            "tables": [
+              {
+                "table": {
+                  "name": "circuit",
+                  "schema": "public"
+                },
+                "array_relationships": [
+                  {
+                    "name": "races",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "circuit_id",
+                        "table": {
+                          "name": "race",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "constructor",
+                  "schema": "public"
+                },
+                "array_relationships": [
+                  {
+                    "name": "constructorPreviousNextConstructorsByConstructorId",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "constructor_id",
+                        "table": {
+                          "name": "constructor_previous_next_constructor",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "constructor_previous_next_constructors",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "previous_next_constructor_id",
+                        "table": {
+                          "name": "constructor_previous_next_constructor",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "season_constructor_standings",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "constructor_id",
+                        "table": {
+                          "name": "season_constructor_standing",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "constructor_previous_next_constructor",
+                  "schema": "public"
+                },
+                "object_relationships": [
+                  {
+                    "name": "constructorByConstructorId",
+                    "using": {
+                      "foreign_key_constraint_on": "constructor_id"
+                    }
+                  },
+                  {
+                    "name": "constructorByPreviousNextConstructorId",
+                    "using": {
+                      "foreign_key_constraint_on": "previous_next_constructor_id"
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "country",
+                  "schema": "public"
+                },
+                "array_relationships": [
+                  {
+                    "name": "circuits",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "country_id",
+                        "table": {
+                          "name": "circuit",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "constructors",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "country_id",
+                        "table": {
+                          "name": "constructor",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "engine_manufacturers",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "country_id",
+                        "table": {
+                          "name": "engine_manufacturer",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "grand_prixes",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "country_id",
+                        "table": {
+                          "name": "grand_prix",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "tyre_manufacturers",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "country_id",
+                        "table": {
+                          "name": "tyre_manufacturer",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "driver",
+                  "schema": "public"
+                },
+                "array_relationships": [
+                  {
+                    "name": "driverFamilyRelationshipsByOtherDriverId",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "other_driver_id",
+                        "table": {
+                          "name": "driver_family_relationship",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "driver_family_relationships",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "driver_id",
+                        "table": {
+                          "name": "driver_family_relationship",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "season_driver_standings",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "driver_id",
+                        "table": {
+                          "name": "season_driver_standing",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "driver_family_relationship",
+                  "schema": "public"
+                },
+                "object_relationships": [
+                  {
+                    "name": "driver",
+                    "using": {
+                      "foreign_key_constraint_on": "driver_id"
+                    }
+                  },
+                  {
+                    "name": "driverByOtherDriverId",
+                    "using": {
+                      "foreign_key_constraint_on": "other_driver_id"
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "driver_of_the_day_result",
+                  "schema": "public"
+                }
+              },
+              {
+                "table": {
+                  "name": "engine_manufacturer",
+                  "schema": "public"
+                },
+                "array_relationships": [
+                  {
+                    "name": "season_constructor_standings",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "engine_manufacturer_id",
+                        "table": {
+                          "name": "season_constructor_standing",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "free_practice_1_result",
+                  "schema": "public"
+                }
+              },
+              {
+                "table": {
+                  "name": "free_practice_2_result",
+                  "schema": "public"
+                }
+              },
+              {
+                "table": {
+                  "name": "free_practice_3_result",
+                  "schema": "public"
+                }
+              },
+              {
+                "table": {
+                  "name": "free_practice_4_result",
+                  "schema": "public"
+                }
+              },
+              {
+                "table": {
+                  "name": "grand_prix",
+                  "schema": "public"
+                },
+                "array_relationships": [
+                  {
+                    "name": "races",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "grand_prix_id",
+                        "table": {
+                          "name": "race",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "qualifying_result",
+                  "schema": "public"
+                }
+              },
+              {
+                "table": {
+                  "name": "race",
+                  "schema": "public"
+                },
+                "object_relationships": [
+                  {
+                    "name": "circuit",
+                    "using": {
+                      "foreign_key_constraint_on": "circuit_id"
+                    }
+                  },
+                  {
+                    "name": "grand_prix",
+                    "using": {
+                      "foreign_key_constraint_on": "grand_prix_id"
+                    }
+                  }
+                ],
+                "array_relationships": [
+                  {
+                    "name": "free_practice_1",
+                    "using": {
+                      "manual_configuration": {
+                        "column_mapping": {
+                          "id": "race_id"
+                        },
+                        "insertion_order": null,
+                        "remote_table": {
+                          "name": "free_practice_1_result",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "free_practice_2",
+                    "using": {
+                      "manual_configuration": {
+                        "column_mapping": {
+                          "id": "race_id"
+                        },
+                        "insertion_order": null,
+                        "remote_table": {
+                          "name": "free_practice_2_result",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "free_practice_3",
+                    "using": {
+                      "manual_configuration": {
+                        "column_mapping": {
+                          "id": "race_id"
+                        },
+                        "insertion_order": null,
+                        "remote_table": {
+                          "name": "free_practice_3_result",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "free_practice_4",
+                    "using": {
+                      "manual_configuration": {
+                        "column_mapping": {
+                          "id": "race_id"
+                        },
+                        "insertion_order": null,
+                        "remote_table": {
+                          "name": "free_practice_4_result",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "qyalifying",
+                    "using": {
+                      "manual_configuration": {
+                        "column_mapping": {
+                          "id": "race_id"
+                        },
+                        "insertion_order": null,
+                        "remote_table": {
+                          "name": "qualifying_result",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "race_constructor_standings",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "race_id",
+                        "table": {
+                          "name": "race_constructor_standing",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "race_driver_standings",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "race_id",
+                        "table": {
+                          "name": "race_driver_standing",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "race_results",
+                    "using": {
+                      "manual_configuration": {
+                        "column_mapping": {
+                          "id": "race_id"
+                        },
+                        "insertion_order": null,
+                        "remote_table": {
+                          "name": "race_result",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "sprint_qualifying",
+                    "using": {
+                      "manual_configuration": {
+                        "column_mapping": {
+                          "id": "race_id"
+                        },
+                        "insertion_order": null,
+                        "remote_table": {
+                          "name": "sprint_qualifying_result",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "sprint_race",
+                    "using": {
+                      "manual_configuration": {
+                        "column_mapping": {
+                          "id": "race_id"
+                        },
+                        "insertion_order": null,
+                        "remote_table": {
+                          "name": "sprint_race_result",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "race_constructor_standing",
+                  "schema": "public"
+                },
+                "object_relationships": [
+                  {
+                    "name": "constructorByConstructorId",
+                    "using": {
+                      "foreign_key_constraint_on": "constructor_id"
+                    }
+                  },
+                  {
+                    "name": "engine_manufacturer",
+                    "using": {
+                      "foreign_key_constraint_on": "engine_manufacturer_id"
+                    }
+                  },
+                  {
+                    "name": "race",
+                    "using": {
+                      "foreign_key_constraint_on": "race_id"
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "race_data",
+                  "schema": "public"
+                },
+                "object_relationships": [
+                  {
+                    "name": "constructorByConstructorId",
+                    "using": {
+                      "foreign_key_constraint_on": "constructor_id"
+                    }
+                  },
+                  {
+                    "name": "driver",
+                    "using": {
+                      "foreign_key_constraint_on": "driver_id"
+                    }
+                  },
+                  {
+                    "name": "engine_manufacturer",
+                    "using": {
+                      "foreign_key_constraint_on": "engine_manufacturer_id"
+                    }
+                  },
+                  {
+                    "name": "race",
+                    "using": {
+                      "foreign_key_constraint_on": "race_id"
+                    }
+                  },
+                  {
+                    "name": "tyre_manufacturer",
+                    "using": {
+                      "foreign_key_constraint_on": "tyre_manufacturer_id"
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "race_driver_standing",
+                  "schema": "public"
+                },
+                "object_relationships": [
+                  {
+                    "name": "driver",
+                    "using": {
+                      "foreign_key_constraint_on": "driver_id"
+                    }
+                  },
+                  {
+                    "name": "race",
+                    "using": {
+                      "foreign_key_constraint_on": "race_id"
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "race_result",
+                  "schema": "public"
+                }
+              },
+              {
+                "table": {
+                  "name": "season",
+                  "schema": "public"
+                },
+                "array_relationships": [
+                  {
+                    "name": "races",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "year",
+                        "table": {
+                          "name": "race",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "season_constructor_standings",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "year",
+                        "table": {
+                          "name": "season_constructor_standing",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "name": "season_driver_standings",
+                    "using": {
+                      "foreign_key_constraint_on": {
+                        "column": "year",
+                        "table": {
+                          "name": "season_driver_standing",
+                          "schema": "public"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "season_constructor_standing",
+                  "schema": "public"
+                },
+                "object_relationships": [
+                  {
+                    "name": "constructorByConstructorId",
+                    "using": {
+                      "foreign_key_constraint_on": "constructor_id"
+                    }
+                  },
+                  {
+                    "name": "engine_manufacturer",
+                    "using": {
+                      "foreign_key_constraint_on": "engine_manufacturer_id"
+                    }
+                  },
+                  {
+                    "name": "season",
+                    "using": {
+                      "foreign_key_constraint_on": "year"
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "season_driver_standing",
+                  "schema": "public"
+                },
+                "object_relationships": [
+                  {
+                    "name": "driver",
+                    "using": {
+                      "foreign_key_constraint_on": "driver_id"
+                    }
+                  },
+                  {
+                    "name": "season",
+                    "using": {
+                      "foreign_key_constraint_on": "year"
+                    }
+                  }
+                ]
+              },
+              {
+                "table": {
+                  "name": "sprint_qualifying_result",
+                  "schema": "public"
+                }
+              },
+              {
+                "table": {
+                  "name": "sprint_race_result",
+                  "schema": "public"
+                }
+              },
+              {
+                "table": {
+                  "name": "tyre_manufacturer",
+                  "schema": "public"
+                }
+              }
+            ],
+            "configuration": {
+              "connection_info": {
+                "database_url": {
+                  "from_env": "HASURA_F1_DB"
+                },
+                "isolation_level": "read-committed",
+                "use_prepared_statements": false
+              }
+            }
+          }
+        ]
+      }
+    }

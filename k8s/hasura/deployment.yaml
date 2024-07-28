@@ -16,7 +16,7 @@ spec:
         app: hasura
     spec:
       containers:
-      - image: hasura/graphql-engine:v2.38.0
+      - image: hasura/graphql-engine:latest.cli-migrations-v3.ubuntu
         imagePullPolicy: IfNotPresent
         name: hasura
         env:
@@ -43,3 +43,12 @@ spec:
             path: /healthz
             port: http
         resources: {}
+        volumeMounts:
+        - mountPath: /tmp/config.json
+          name: hasura-config
+          subPath: config.json
+      volumes:
+
+      - name: hasura-config
+        configMap:
+          name: hasura-config
