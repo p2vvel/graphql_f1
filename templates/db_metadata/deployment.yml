@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-metadata
+  name: {{ .Release.Name }}-db-metadata
 spec:
   selector:
     matchLabels:
-      app: db-metadata
+      app: {{ .Release.Name }}-db-metadata
   template:
     metadata:
       labels:
-        app: db-metadata
+        app: {{ .Release.Name }}-db-metadata
     spec:
       containers:
       - name: db

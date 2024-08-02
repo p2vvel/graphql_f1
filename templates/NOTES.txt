@@ -1,0 +1,5 @@
+Text that will be displayed after installing chart
+
+### TODO: sprawdz czy dostaniesz sie do poda przez load balancer - pewnie trzeba dorzucic jakies nodeport czy jak to sie do poda z hasura
+### TODO: ogarnij skladnie curla do importu metadanych i powinno byc done
+### TODO: ogarnij moze tez autoscaling - zapodasz mu bardzo malo zasobow i bedzie sie fajnie skalowalo

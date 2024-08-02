@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: hasura
+    app: {{ .Release.Name }}-hasura
     hasuraService: custom
-  name: hasura
+  name: {{ .Release.Name }}-hasura
   namespace: default
 spec:
   selector:
     matchLabels:
-      app: hasura
+      app: {{ .Release.Name }}-hasura
   template:
     metadata:
       labels:
-        app: hasura
+        app: {{ .Release.Name }}-hasura
     spec:
       containers:
       - image: hasura/graphql-engine:latest.cli-migrations-v3.ubuntu
@@ -21,7 +21,7 @@ spec:
         name: hasura
         env:
         - name: HASURA_GRAPHQL_DATABASE_URL
-          value: postgres://f1user:f1password@db-metadata-service:5432/f1db
+          value: postgres://f1user:f1password@{{ .Release.Name }}-db-metadata:5432/f1db
         ## enable the console served by server
         - name: HASURA_GRAPHQL_ENABLE_CONSOLE
           value: "true"
@@ -29,7 +29,7 @@ spec:
         - name: HASURA_GRAPHQL_DEV_MODE
           value: "true"
         - name: HASURA_F1_DB
-          value: postgres://f1user:f1password@db-f1-service:5432/f1db
+          value: postgres://f1user:f1password@{{ .Release.Name }}-db-f1:5432/f1db
         ports:
         - name: http
           containerPort: 8080
@@ -43,12 +43,3 @@ spec:
             path: /healthz
             port: http
         resources: {}
-        volumeMounts:
-        - mountPath: /tmp/config.json
-          name: hasura-config
-          subPath: config.json
-      volumes:
-
-      - name: hasura-config
-        configMap:
-          name: hasura-config

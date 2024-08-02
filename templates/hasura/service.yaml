@@ -2,8 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: hasura
-  name: hasura
+    app: {{ .Release.Name }}-hasura
+  name: {{ .Release.Name }}-hasura
+  
   namespace: default
 spec:
   ports:
@@ -11,5 +12,5 @@ spec:
     port: 80
     targetPort: 8080
   selector:
-    app: hasura
+    app: {{ .Release.Name }}-hasura
   type: LoadBalancer

@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-hasura-init-job
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: db-init
+        image: alpine
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - "apk add --no-interactive curl; curl -d '{\"type\":\"replace_metadata\", \"args\":'\"$(cat /tmp/config.json)\"'}' http://{{ .Release.Name }}-hasura/v1/metadata"
+        volumeMounts:
+        - mountPath: /tmp/config.json
+          name: hasura-config
+          subPath: config.json
+      volumes:
+      - name: hasura-config
+        configMap:
+          name: {{ .Release.Name }}-hasura-config
+
+      restartPolicy: Never
+  backoffLimit: 4

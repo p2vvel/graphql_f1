@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-f1
+  name: {{ .Release.Name }}-db-f1
 spec:
   selector:
     matchLabels:
-      app: db-f1
+      app: {{ .Release.Name }}-db-f1
   template:
     metadata:
       labels:
-        app: db-f1
+        app: {{ .Release.Name }}-db-f1
     spec:
       volumes:
         - name: dump-volume
@@ -19,8 +19,18 @@ spec:
         image: postgres:15
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "512Mi"
+            cpu: "2000m"
+        readinessProbe:
+          exec:
+            command:
+            - pg_isready 
+            - -d 
+            - f1db 
+            - -U 
+            - f1user 
+            - -h 
+            - 127.0.0.1 
         env:
           - name: POSTGRES_USER
             value: f1user

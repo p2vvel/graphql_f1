@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: hasura-config
+  name: {{ .Release.Name }}-hasura-config
 data:
   key: value
   config.json: |

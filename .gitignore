@@ -1,8 +1,0 @@
-.venv/
-venv/
-*.pyc
-__pycache__/
-*.sql
-.idea/
-.vscode/
-.*_cache/
