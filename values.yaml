@@ -3,3 +3,4 @@
 # Declare variables to be passed into your templates.
 
 hasuraReplicas: 1
+dbRelease: v2024.14.0
