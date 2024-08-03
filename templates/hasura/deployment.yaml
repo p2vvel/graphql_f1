@@ -30,6 +30,10 @@ spec:
           value: "true"
         - name: HASURA_F1_DB
           value: postgres://f1user:f1password@{{ .Release.Name }}-db-f1:5432/f1db
+        - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
+          value: anonymous
+        - name: HASURA_GRAPHQL_ADMIN_SECRET
+          value: change_me_please
         ports:
         - name: http
           containerPort: 8080
