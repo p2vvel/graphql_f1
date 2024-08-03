@@ -1,6 +1,5 @@
 Text that will be displayed after installing chart
 
-### TODO: ogarnij secrety, zeby generowaly sie losowo
 ### TODO: ogarnij limity pamieci, zeby wszedzie dalo sie ustawic
 ### TODO: ogarnij flagi, zeby mozna bylo wlczyc  i wylaczyc konsole
 

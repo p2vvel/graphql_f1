@@ -28,12 +28,22 @@ spec:
             - -h 
             - 127.0.0.1 
         env:
-          - name: POSTGRES_USER
-            value: f1user
-          - name: POSTGRES_PASSWORD
-            value: f1password
-          - name: POSTGRES_DB
-            value: f1db
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-chart-config
+              key: dbF1.user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-chart-config
+              key: dbF1.password
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-chart-config
+              key: dbF1.db
+
         ports:
         - containerPort: 5432
         volumeMounts:

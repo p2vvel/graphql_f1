@@ -20,23 +20,34 @@ spec:
         imagePullPolicy: IfNotPresent
         name: hasura
         env:
-        - name: HASURA_GRAPHQL_DATABASE_URL
-          value: postgres://f1user:f1password@{{ .Release.Name }}-db-metadata:5432/f1db
-        ## enable the console served by server
-        - name: HASURA_GRAPHQL_ENABLE_CONSOLE
-          value: "true"
-        ## enable debugging mode. It is recommended to disable this in production
-        - name: HASURA_GRAPHQL_DEV_MODE
-          value: "true"
-        - name: HASURA_F1_DB
-          value: postgres://f1user:f1password@{{ .Release.Name }}-db-f1:5432/f1db
-        - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
-          value: anonymous
+        # admin secret, allows for console access and metadata changes
         - name: HASURA_GRAPHQL_ADMIN_SECRET
           valueFrom:
             configMapKeyRef:
               name: {{ .Release.Name }}-chart-config
               key: hasura.adminSecret
+        # hardcoded in config, cannot be changed, allows for unauthorized read access to api
+        - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
+          value: anonymous
+        ## enable the console served by ser ver
+        - name: HASURA_GRAPHQL_ENABLE_CONSOLE
+          value: "true"
+        ## enable debugging mode. It is recommended to disable this in production
+        - name: HASURA_GRAPHQL_DEV_MODE
+          value: "true"
+          
+        - name: HASURA_GRAPHQL_DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-chart-config
+              key: dbMetadata.url
+
+        - name: HASURA_F1_DB
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-chart-config
+              key: dbF1.url
+
         ports:
         - name: http
           containerPort: 8080

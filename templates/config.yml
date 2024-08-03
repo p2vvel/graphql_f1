@@ -3,11 +3,58 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-chart-config
 data:
-  hasura:
-    adminSecret: change_me
-  dbF1:
-    user: f1_user
-    password: f1_password
-  dbMetadata:
-    user: metadata_user
-    password: metadata_password
+  {{ $secret := uuidv4 -}}
+  {{- if .Values.hasura.adminSecret -}}
+    {{- $secret = .Values.hasura.adminSecret -}}
+  {{- end -}}
+  hasura.adminSecret: {{ $secret | quote }}
+
+  {{- $f1user := "f1user" }}
+  {{- if .Values.dbF1 -}}
+  {{- if .Values.dbF1.user -}}
+    {{- $f1user = .Values.dbF1.user -}}
+  {{- end }}
+  {{- end }}
+  dbF1.user: {{ $f1user | quote }}
+
+  {{- $f1password := "f1password" }}
+  {{- if .Values.dbF1 -}}
+  {{- if .Values.dbF1.password -}}
+    {{- $f1password = .Values.dbF1.password -}}
+  {{- end }}
+  {{- end }}
+  dbF1.password: {{ $f1password | quote }}
+  
+  {{- $f1db := "f1db" }}
+  {{- if .Values.dbF1 -}}
+  {{- if .Values.dbF1.db -}}
+    {{- $f1db = .Values.dbF1.db -}}
+  {{- end }}
+  {{- end }}
+  dbF1.db: {{ $f1db | quote }}
+  dbF1.url: "postgres://{{ $f1user }}:{{ $f1password }}@{{ .Release.Name }}-db-f1:5432/{{ $f1db }}"
+
+  {{- $metadatauser := "metadatauser" }}
+  {{- if .Values.dbMetadata -}}
+  {{- if .Values.dbMetadata.user -}}
+    {{- $metadatauser = .Values.dbMetadata.user -}}
+  {{- end }}
+  {{- end }}
+  dbMetadata.user: {{ $metadatauser | quote }}
+
+  {{- $metadatapassword := "metadatapassword" }}
+  {{- if .Values.dbMetadata -}}
+  {{- if .Values.dbMetadata.password -}}
+    {{- $metadatapassword = .Values.dbMetadata.password -}}
+  {{- end }}
+  {{- end }}
+  dbMetadata.password: {{ $metadatapassword | quote }}
+  
+  {{- $metadatadb := "metadatadb" }}
+  {{- if .Values.dbMetadata -}}
+  {{- if .Values.dbMetadata.db -}}
+    {{- $metadatadb = .Values.dbMetadata.db -}}
+  {{- end }}
+  {{- end }}
+  dbMetadata.db: {{ $metadatadb | quote }}
+  dbMetadata.url: "postgres://{{ $metadatauser }}:{{ $metadatapassword }}@{{ .Release.Name }}-db-metadata:5432/{{ $metadatadb }}"
