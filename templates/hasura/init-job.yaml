@@ -12,11 +12,17 @@ spec:
       containers:
       - name: db-init
         image: alpine
+        env:
+        - name: HASURA_GRAPHQL_ADMIN_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-chart-config
+              key: hasura.adminSecret
         command:
           - "/bin/sh"
           - "-c"
         args:
-          - "apk add --no-interactive curl; curl -d '{\"type\":\"replace_metadata\", \"args\":'\"$(cat /tmp/config.json)\"'}' http://{{ .Release.Name }}-hasura/v1/metadata"
+          - "apk add --no-interactive curl; curl --fail-with-body -H \"X-Hasura-Admin-Secret: $HASURA_GRAPHQL_ADMIN_SECRET\" -d '{\"type\":\"replace_metadata\", \"args\":'\"$(cat /tmp/config.json)\"'}' http://{{ .Release.Name }}-hasura/v1/metadata"
         volumeMounts:
         - mountPath: /tmp/config.json
           name: hasura-config

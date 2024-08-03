@@ -33,7 +33,10 @@ spec:
         - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
           value: anonymous
         - name: HASURA_GRAPHQL_ADMIN_SECRET
-          value: change_me_please
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-chart-config
+              key: hasura.adminSecret
         ports:
         - name: http
           containerPort: 8080

@@ -3,7 +3,6 @@ Text that will be displayed after installing chart
 ### TODO: ogarnij secrety, zeby generowaly sie losowo
 ### TODO: ogarnij limity pamieci, zeby wszedzie dalo sie ustawic
 ### TODO: ogarnij flagi, zeby mozna bylo wlczyc  i wylaczyc konsole
-### TODO: sprawdz czy na nowej konfiguracji dalej dziala (poprzedni commit)
 
 ### TODO: napisz ladne readme + ogarnij jak sie robi repo helma na githubie (gh pages)
 
