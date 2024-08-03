@@ -1,8 +1,17 @@
-Text that will be displayed after installing chart
+THANKS FOR INSTALLING MY CHART :>
 
-### TODO: ogarnij limity pamieci, zeby wszedzie dalo sie ustawic
-### TODO: ogarnij flagi, zeby mozna bylo wlczyc  i wylaczyc konsole
+To access load balancer ADDRESS, type:
+`kubectl get service {{ .Release.Name }}-hasura -o "jsonpath={.status.loadBalancer.ingress[0].ip}"`
 
-### TODO: napisz ladne readme + ogarnij jak sie robi repo helma na githubie (gh pages)
+
+Using that address, you can access console page (http://ADDRESS) or 
+use endpoint http://ADDRESS/v1/graphql to make API requests.
+
+
+When you open console page, you will be prompted to 
+pass admin secret. You can access that information with:
+`kubectl get configmaps {{ .Release.Name }}-chart-config -o "jsonpath={.data['hasura\.adminSecret']}"`
+
+
 
 
