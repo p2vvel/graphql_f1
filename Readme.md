@@ -14,8 +14,8 @@ GraphQL API providing historical F1 data, built with Hasura.
 
 Just use helm to add repo and install this chart:
 ```
-helm repo add ... ...
-helm install --wait --timeout 600s f1 .../...
+helm repo add p2vvel_f1 https://p2vvel.github.io/graphql_f1/
+helm install --wait --timeout 600s p2vvel_f1/graphql_f1
 ```
 
 Pay attention to the `--wait` used above. It's necesssary to make sure that metadata migration job will run when database with F1 data is initialized (Postgres image does not accept connections when running .sql scripts e.g. importing dump). That behaviour might seem a little tricky, so documentation source >[here](https://helm.sh/docs/intro/using_helm/#helpful-options-for-installupgraderollback)<.
