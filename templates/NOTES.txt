@@ -11,7 +11,3 @@ use endpoint http://ADDRESS/v1/graphql to make API requests.
 When you open console page, you will be prompted to 
 pass admin secret. You can access that information with:
 `kubectl get configmaps {{ .Release.Name }}-chart-config -o "jsonpath={.data['hasura\.adminSecret']}"`
-
-
-
-

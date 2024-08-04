@@ -17,6 +17,12 @@ spec:
       containers:
       - name: db
         image: postgres:15
+        resources:
+          requests:
+            memory: {{ .Values.dbF1.memoryMin | quote }}
+            cpu: {{ .Values.dbF1.cpuMin | quote }}
+          limits:
+            memory: {{ .Values.dbF1.memoryMax | quote }}
         readinessProbe:
           exec:
             command:
@@ -52,6 +58,12 @@ spec:
       initContainers:
         - name: db-init
           image: alpine
+          resources:
+            requests:
+              memory: {{ .Values.dbF1.memoryMin | quote }}
+              cpu: {{ .Values.dbF1.cpuMin | quote }}
+            limits:
+              memory: {{ .Values.dbF1.memoryMax | quote }}
           env:
             - name: F1DB_DUMP
               value: {{ .Values.dbRelease | quote }}

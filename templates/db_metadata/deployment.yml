@@ -15,9 +15,11 @@ spec:
       - name: db
         image: postgres:15
         resources:
+          requests:
+            memory: {{ .Values.dbMetadata.memoryMin | quote }}
+            cpu: {{ .Values.dbMetadata.cpuMin | quote }}
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: {{ .Values.dbMetadata.memoryMax | quote }}
         env:
         - name: POSTGRES_USER
           valueFrom:

@@ -19,6 +19,12 @@ spec:
       - image: hasura/graphql-engine:latest.cli-migrations-v3.ubuntu
         imagePullPolicy: IfNotPresent
         name: hasura
+        resources:
+          requests:
+            memory: {{ .Values.hasura.memoryMin | quote }}
+            cpu: {{ .Values.hasura.cpuMin | quote }}
+          limits:
+            memory: {{ .Values.hasura.memoryMax | quote }}
         env:
         # admin secret, allows for console access and metadata changes
         - name: HASURA_GRAPHQL_ADMIN_SECRET
@@ -29,12 +35,16 @@ spec:
         # hardcoded in config, cannot be changed, allows for unauthorized read access to api
         - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
           value: anonymous
-        ## enable the console served by ser ver
+        {{ if .Values.hasura.console -}}
+        # enable the console endpoint
         - name: HASURA_GRAPHQL_ENABLE_CONSOLE
           value: "true"
-        ## enable debugging mode. It is recommended to disable this in production
+        {{- end -}}
+        {{ if .Values.hasura.devMode }}
+        # enable debugging mode. It is recommended to disable this in production
         - name: HASURA_GRAPHQL_DEV_MODE
           value: "true"
+        {{- end }}
           
         - name: HASURA_GRAPHQL_DATABASE_URL
           valueFrom:
@@ -60,4 +70,3 @@ spec:
           httpGet:
             path: /healthz
             port: http
-        resources: {}
