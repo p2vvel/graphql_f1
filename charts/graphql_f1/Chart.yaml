@@ -1,5 +1,5 @@
 apiVersion: v2
-name: graphql_f1
+name: graphql-f1
 description: GraphQL API providing historical F1 data, built with Hasura.
 
 type: application
