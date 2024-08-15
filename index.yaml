@@ -11,15 +11,4 @@ entries:
     urls:
     - https://github.com/p2vvel/graphql_f1/releases/download/graphql-f1-1.0.0/graphql-f1-1.0.0.tgz
     version: 1.0.0
-  graphql_f1:
-  - apiVersion: v2
-    appVersion: v2.41.0
-    created: "2024-08-04T16:19:39.80845026Z"
-    description: GraphQL API providing historical F1 data, built with Hasura.
-    digest: 61ec2ae9412305a628e70b9685de94764a7a3e107dda055347ed7c95aa055539
-    name: graphql_f1
-    type: application
-    urls:
-    - https://github.com/p2vvel/graphql_f1/releases/download/graphql_f1-1.0.0/graphql_f1-1.0.0.tgz
-    version: 1.0.0
 generated: "2024-08-15T23:15:42.29902117Z"
